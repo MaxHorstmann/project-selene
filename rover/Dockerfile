@@ -9,7 +9,7 @@ FROM base
 
 # --- Install your dependencies below ---
 # install some tools for debugging
-RUN apt-get update && apt-get install -y curl jq iputils-ping nmap
+RUN apt-get update && apt-get install -y curl jq iputils-ping iproute2 nmap
 # Example: RUN pip install anthropic httpx networkx
 # Example: RUN npm install -g tsx && npm install openai
 
