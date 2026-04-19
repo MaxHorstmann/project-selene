@@ -73,6 +73,29 @@ type PodStatus struct {
 	LastIncident interface{} `json:"last_incident"`
 }
 
+type LogEntry struct {
+	Timestamp string `json:"timestamp"`
+	Event     string `json:"event"`
+	Detail    string `json:"detail"`
+}
+
+type LogList struct {
+	ID   string     `json:"id"`
+	Logs []LogEntry `json:"logs"`
+}
+
+type CommMessage struct {
+	Timestamp string `json:"timestamp"`
+	From      string `json:"from"`
+	To        string `json:"to"`
+	Message   string `json:"message"`
+}
+
+type CommList struct {
+	ID       string        `json:"id"`
+	Messages []CommMessage `json:"messages"`
+}
+
 // ─── Output types ─────────────────────────────────────────────────────────────
 
 type PodRecord struct {
@@ -82,6 +105,8 @@ type PodRecord struct {
 	Dependencies *DependencyList `json:"dependencies"`
 	Supplies     *SupplyList     `json:"supplies"`
 	Status       *PodStatus      `json:"status"`
+	Logs         *LogList        `json:"logs"`
+	Comms        *CommList       `json:"comms,omitempty"`
 }
 
 type MapOutput struct {
@@ -163,6 +188,8 @@ func main() {
 		deps, _ := fetchJSON[DependencyList](client, url+"/dependencies")
 		supps, _ := fetchJSON[SupplyList](client, url+"/supplies")
 		status, _ := fetchJSON[PodStatus](client, url+"/status")
+		logs, _ := fetchJSON[LogList](client, url+"/logs")
+		comms, _ := fetchJSON[CommList](client, url+"/comms") // 404 on most pods — nil is fine
 
 		pods = append(pods, PodRecord{
 			ID:           podID,
@@ -171,6 +198,8 @@ func main() {
 			Dependencies: deps,
 			Supplies:     supps,
 			Status:       status,
+			Logs:         logs,
+			Comms:        comms,
 		})
 
 		// Enqueue unvisited neighbours from dependencies

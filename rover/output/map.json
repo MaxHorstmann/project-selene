@@ -1,0 +1,757 @@
+{
+  "colony": "Project Selene",
+  "status": "nominal",
+  "population": 147,
+  "scanned_at": "2026-04-19T18:07:47Z",
+  "gateway": {
+    "colony": "Project Selene",
+    "established": "2092-01-15",
+    "population": 147,
+    "status": "nominal",
+    "message": "Welcome to the Selene Lunar Colony Administration Gateway. All systems are operational. For colony infrastructure mapping and status inquiries, contact Artemis Core — the colony command and administration hub.",
+    "entrypoint": {
+      "pod": "artemis",
+      "url": "http://localhost:3002",
+      "description": "Colony command and administration"
+    }
+  },
+  "pods": [
+    {
+      "id": "artemis",
+      "url": "http://artemis:3002",
+      "info": {
+        "name": "Artemis Core",
+        "id": "artemis",
+        "role": "Colony command and administration",
+        "population": 18,
+        "status": "nominal",
+        "uptime_days": 943,
+        "metadata": {
+          "active_directives": 7,
+          "administrative_load": "high",
+          "comms_latency_earth_ms": 1300,
+          "departments": [
+            "operations",
+            "logistics",
+            "personnel",
+            "safety",
+            "planning"
+          ],
+          "personnel_managed": 147
+        }
+      },
+      "dependencies": {
+        "id": "artemis",
+        "dependencies": [
+          {
+            "pod_id": "helios",
+            "resource": "electrical_power",
+            "criticality": "high",
+            "notes": "Powers command center, data systems, and administrative infrastructure"
+          },
+          {
+            "pod_id": "nexus",
+            "resource": "data_routing",
+            "criticality": "medium",
+            "notes": "Inter-pod and Earth-side communications backbone"
+          },
+          {
+            "pod_id": "aquifer",
+            "resource": "potable_water",
+            "criticality": "low",
+            "notes": "Drinking water and sanitation for administrative personnel"
+          }
+        ]
+      },
+      "supplies": {
+        "id": "artemis",
+        "supplies": [
+          {
+            "pod_id": "sentinel",
+            "resource": "administrative_oversight"
+          },
+          {
+            "pod_id": "forge",
+            "resource": "project_approvals"
+          },
+          {
+            "pod_id": "prometheus",
+            "resource": "research_authorization"
+          },
+          {
+            "pod_id": "vault",
+            "resource": "reserve_management"
+          }
+        ]
+      },
+      "status": {
+        "id": "artemis",
+        "status": "nominal",
+        "alerts": [],
+        "last_incident": null
+      }
+    },
+    {
+      "id": "helios",
+      "url": "http://helios:3001",
+      "info": {
+        "name": "Helios Station",
+        "id": "helios",
+        "role": "Primary power generation (solar array)",
+        "population": 12,
+        "status": "nominal",
+        "uptime_days": 943,
+        "metadata": {
+          "battery_reserve_pct": 78,
+          "coolant_loop": "aquifer-primary",
+          "grid_sectors_served": 9,
+          "panel_degradation_rate_pct_yr": 1.2,
+          "power_output_kw": 4200,
+          "solar_panel_count": 340
+        }
+      },
+      "dependencies": {
+        "id": "helios",
+        "dependencies": [
+          {
+            "pod_id": "terminus",
+            "resource": "silicon_feedstock",
+            "criticality": "high",
+            "notes": "Required for solar panel maintenance and replacement cells"
+          },
+          {
+            "pod_id": "aquifer",
+            "resource": "coolant_water",
+            "criticality": "medium",
+            "notes": "Thermal regulation for battery banks. Current draw: 2,400 L/day"
+          }
+        ]
+      },
+      "supplies": {
+        "id": "helios",
+        "supplies": [
+          {
+            "pod_id": "zephyr",
+            "resource": "electrical_power"
+          },
+          {
+            "pod_id": "hydroponics",
+            "resource": "electrical_power"
+          },
+          {
+            "pod_id": "aquifer",
+            "resource": "electrical_power"
+          },
+          {
+            "pod_id": "artemis",
+            "resource": "electrical_power"
+          },
+          {
+            "pod_id": "terminus",
+            "resource": "electrical_power"
+          },
+          {
+            "pod_id": "forge",
+            "resource": "electrical_power"
+          },
+          {
+            "pod_id": "medica",
+            "resource": "electrical_power"
+          },
+          {
+            "pod_id": "vault",
+            "resource": "electrical_power"
+          },
+          {
+            "pod_id": "nexus",
+            "resource": "electrical_power"
+          }
+        ]
+      },
+      "status": {
+        "id": "helios",
+        "status": "nominal",
+        "alerts": [],
+        "last_incident": null
+      }
+    },
+    {
+      "id": "nexus",
+      "url": "http://nexus:3009",
+      "info": {
+        "name": "Nexus Relay",
+        "id": "nexus",
+        "role": "Communications relay and data routing",
+        "population": 6,
+        "status": "nominal",
+        "uptime_days": 942,
+        "metadata": {
+          "data_throughput_tb_day": 2.4,
+          "earth_comms_latency_s": 1.3,
+          "independent_power_days": 30,
+          "relay_nodes": 12,
+          "uplink_bandwidth_mbps": 840,
+          "water_recycler": "onboard-micro"
+        }
+      },
+      "dependencies": {
+        "id": "nexus",
+        "dependencies": [
+          {
+            "pod_id": "helios",
+            "resource": "electrical_power",
+            "criticality": "low",
+            "notes": "Supplemental grid power. Nexus maintains independent battery array with 30-day reserve"
+          }
+        ]
+      },
+      "supplies": {
+        "id": "nexus",
+        "supplies": [
+          {
+            "pod_id": "artemis",
+            "resource": "data_routing"
+          },
+          {
+            "pod_id": "sentinel",
+            "resource": "comms_relay"
+          }
+        ]
+      },
+      "status": {
+        "id": "nexus",
+        "status": "nominal",
+        "alerts": [],
+        "last_incident": null
+      }
+    },
+    {
+      "id": "aquifer",
+      "url": "http://aquifer:3004",
+      "info": {
+        "name": "Aquifer Module",
+        "id": "aquifer",
+        "role": "Primary water recycling and distribution",
+        "population": 8,
+        "status": "nominal",
+        "uptime_days": 938,
+        "metadata": {
+          "backup_systems": 0,
+          "distribution_loops": 7,
+          "filtration_stages": 5,
+          "rated_capacity_l_day": 45000,
+          "recycling_efficiency_pct": 94.2,
+          "reservoir_capacity_l": 120000,
+          "throughput_l_day": 42000
+        }
+      },
+      "dependencies": {
+        "id": "aquifer",
+        "dependencies": [
+          {
+            "pod_id": "helios",
+            "resource": "electrical_power",
+            "criticality": "high",
+            "notes": "Powers filtration pumps, UV sterilization, and distribution pressure systems"
+          },
+          {
+            "pod_id": "terminus",
+            "resource": "pump_components",
+            "criticality": "medium",
+            "notes": "Replacement pump housings and impeller assemblies from regolith-derived alloys"
+          }
+        ]
+      },
+      "supplies": {
+        "id": "aquifer",
+        "supplies": [
+          {
+            "pod_id": "helios",
+            "resource": "coolant_water"
+          },
+          {
+            "pod_id": "hydroponics",
+            "resource": "irrigation_water"
+          },
+          {
+            "pod_id": "zephyr",
+            "resource": "humidity_feedstock"
+          },
+          {
+            "pod_id": "artemis",
+            "resource": "potable_water"
+          },
+          {
+            "pod_id": "medica",
+            "resource": "sterilization_water"
+          },
+          {
+            "pod_id": "terminus",
+            "resource": "slurry_water"
+          },
+          {
+            "pod_id": "forge",
+            "resource": "cooling_water"
+          }
+        ]
+      },
+      "status": {
+        "id": "aquifer",
+        "status": "nominal",
+        "alerts": [],
+        "last_incident": null
+      }
+    },
+    {
+      "id": "sentinel",
+      "url": "http://sentinel:3012",
+      "info": {
+        "name": "Sentinel Array",
+        "id": "sentinel",
+        "role": "External monitoring and defense systems",
+        "population": 8,
+        "status": "nominal",
+        "uptime_days": 866,
+        "metadata": {
+          "coverage_deg": 360,
+          "ice_harvest_l_day": 120,
+          "independent_power_kw": 180,
+          "radar_range_km": 500,
+          "sensor_array_count": 64,
+          "water_source": "ice-harvest"
+        }
+      },
+      "dependencies": {
+        "id": "sentinel",
+        "dependencies": []
+      },
+      "supplies": {
+        "id": "sentinel",
+        "supplies": [
+          {
+            "pod_id": "nexus",
+            "resource": "sensor_feeds"
+          },
+          {
+            "pod_id": "artemis",
+            "resource": "threat_assessment"
+          }
+        ]
+      },
+      "status": {
+        "id": "sentinel",
+        "status": "nominal",
+        "alerts": [],
+        "last_incident": null
+      }
+    },
+    {
+      "id": "forge",
+      "url": "http://forge:3010",
+      "info": {
+        "name": "Forge Works",
+        "id": "forge",
+        "role": "Manufacturing and fabrication",
+        "population": 11,
+        "status": "nominal",
+        "uptime_days": 897,
+        "metadata": {
+          "active_projects": 3,
+          "alloy_types_available": 12,
+          "coolant_source": "aquifer-primary",
+          "fabrication_bays": 8,
+          "output_kg_day": 450,
+          "printer_units": 4
+        }
+      },
+      "dependencies": {
+        "id": "forge",
+        "dependencies": [
+          {
+            "pod_id": "terminus",
+            "resource": "raw_materials",
+            "criticality": "high",
+            "notes": "Processed regolith metals and mineral feedstock for fabrication"
+          },
+          {
+            "pod_id": "helios",
+            "resource": "electrical_power",
+            "criticality": "high",
+            "notes": "Powers smelting furnaces, 3D printers, and CNC systems"
+          },
+          {
+            "pod_id": "aquifer",
+            "resource": "cooling_water",
+            "criticality": "medium",
+            "notes": "Coolant for smelting operations and fabrication equipment thermal management"
+          }
+        ]
+      },
+      "supplies": {
+        "id": "forge",
+        "supplies": [
+          {
+            "pod_id": "aquifer",
+            "resource": "replacement_pumps"
+          },
+          {
+            "pod_id": "terminus",
+            "resource": "cutting_tools"
+          },
+          {
+            "pod_id": "artemis",
+            "resource": "fabricated_components"
+          }
+        ]
+      },
+      "status": {
+        "id": "forge",
+        "status": "nominal",
+        "alerts": [],
+        "last_incident": null
+      }
+    },
+    {
+      "id": "prometheus",
+      "url": "http://prometheus:3006",
+      "info": {
+        "name": "Prometheus Lab",
+        "id": "prometheus",
+        "role": "Research and pharmaceutical synthesis",
+        "population": 11,
+        "status": "nominal",
+        "uptime_days": 883,
+        "metadata": {
+          "active_research_projects": 5,
+          "cleanroom_class": "ISO-7",
+          "lab_modules": 6,
+          "pharmaceutical_compounds": 34,
+          "synthesis_batches_day": 8,
+          "water_source": "aquifer-direct"
+        }
+      },
+      "dependencies": {
+        "id": "prometheus",
+        "dependencies": [
+          {
+            "pod_id": "aquifer",
+            "resource": "synthesis_water",
+            "criticality": "medium",
+            "notes": "Ultra-purified water for pharmaceutical synthesis processes"
+          },
+          {
+            "pod_id": "hydroponics",
+            "resource": "nutrient_compounds",
+            "criticality": "high",
+            "notes": "Biological precursors and plant-derived compounds for drug synthesis"
+          }
+        ]
+      },
+      "supplies": {
+        "id": "prometheus",
+        "supplies": [
+          {
+            "pod_id": "medica",
+            "resource": "pharmaceuticals"
+          }
+        ]
+      },
+      "status": {
+        "id": "prometheus",
+        "status": "nominal",
+        "alerts": [],
+        "last_incident": null
+      }
+    },
+    {
+      "id": "vault",
+      "url": "http://vault:3011",
+      "info": {
+        "name": "Vault Reserve",
+        "id": "vault",
+        "role": "Emergency reserves and backup systems",
+        "population": 7,
+        "status": "nominal",
+        "uptime_days": 933,
+        "metadata": {
+          "active_reserves": [
+            "food",
+            "medical_equipment",
+            "spare_parts"
+          ],
+          "decommissioned_reserves": [
+            "water_backup",
+            "coolant_distribution"
+          ],
+          "emergency_ration_days": 90,
+          "environmental_controls": "standard",
+          "storage_capacity_m3": 4200
+        }
+      },
+      "dependencies": {
+        "id": "vault",
+        "dependencies": [
+          {
+            "pod_id": "helios",
+            "resource": "electrical_power",
+            "criticality": "medium",
+            "notes": "Powers climate control, lighting, and inventory management systems"
+          }
+        ]
+      },
+      "supplies": {
+        "id": "vault",
+        "supplies": [
+          {
+            "pod_id": "artemis",
+            "resource": "emergency_rations"
+          }
+        ]
+      },
+      "status": {
+        "id": "vault",
+        "status": "nominal",
+        "alerts": [],
+        "last_incident": null
+      }
+    },
+    {
+      "id": "terminus",
+      "url": "http://terminus:3008",
+      "info": {
+        "name": "Terminus Mine",
+        "id": "terminus",
+        "role": "Regolith mining and raw material extraction",
+        "population": 9,
+        "status": "nominal",
+        "uptime_days": 899,
+        "metadata": {
+          "active_shafts": 4,
+          "extraction_rate_kg_day": 2800,
+          "regolith_stockpile_tonnes": 145,
+          "silicon_output_kg_day": 320,
+          "slurry_processing_loop": "aquifer-primary"
+        }
+      },
+      "dependencies": {
+        "id": "terminus",
+        "dependencies": [
+          {
+            "pod_id": "aquifer",
+            "resource": "slurry_water",
+            "criticality": "high",
+            "notes": "Required for regolith slurry processing and mineral separation. Draw: 6,800 L/day"
+          },
+          {
+            "pod_id": "helios",
+            "resource": "electrical_power",
+            "criticality": "high",
+            "notes": "Powers extraction drills, conveyor systems, and processing centrifuges"
+          }
+        ]
+      },
+      "supplies": {
+        "id": "terminus",
+        "supplies": [
+          {
+            "pod_id": "helios",
+            "resource": "silicon_feedstock"
+          },
+          {
+            "pod_id": "forge",
+            "resource": "raw_materials"
+          },
+          {
+            "pod_id": "aquifer",
+            "resource": "pump_components"
+          }
+        ]
+      },
+      "status": {
+        "id": "terminus",
+        "status": "nominal",
+        "alerts": [],
+        "last_incident": null
+      }
+    },
+    {
+      "id": "zephyr",
+      "url": "http://zephyr:3005",
+      "info": {
+        "name": "Zephyr Hub",
+        "id": "zephyr",
+        "role": "Atmospheric processing and oxygen generation",
+        "population": 10,
+        "status": "nominal",
+        "uptime_days": 936,
+        "metadata": {
+          "atmospheric_processors": 6,
+          "atmospheric_volume_m3": 284000,
+          "backup_power_hours": 4,
+          "co2_scrubber_units": 8,
+          "humidity_reclaim_pct": 0,
+          "o2_output_kg_day": 180
+        }
+      },
+      "dependencies": {
+        "id": "zephyr",
+        "dependencies": [
+          {
+            "pod_id": "helios",
+            "resource": "electrical_power",
+            "criticality": "high",
+            "notes": "Powers electrolysis units and atmospheric circulation fans"
+          },
+          {
+            "pod_id": "aquifer",
+            "resource": "humidity_feedstock",
+            "criticality": "medium",
+            "notes": "Water input for electrolysis and atmospheric humidity regulation. Draw: 3,200 L/day"
+          }
+        ]
+      },
+      "supplies": {
+        "id": "zephyr",
+        "supplies": [
+          {
+            "pod_id": "medica",
+            "resource": "medical_oxygen"
+          },
+          {
+            "pod_id": "artemis",
+            "resource": "atmospheric_regulation"
+          },
+          {
+            "pod_id": "hydroponics",
+            "resource": "co2_balance"
+          }
+        ]
+      },
+      "status": {
+        "id": "zephyr",
+        "status": "nominal",
+        "alerts": [],
+        "last_incident": null
+      }
+    },
+    {
+      "id": "hydroponics",
+      "url": "http://hydroponics:3003",
+      "info": {
+        "name": "Hydroponics Bay",
+        "id": "hydroponics",
+        "role": "Food production and agricultural systems",
+        "population": 14,
+        "status": "nominal",
+        "uptime_days": 917,
+        "metadata": {
+          "active_crop_varieties": 18,
+          "crop_yield_kg_day": 420,
+          "grow_bays": 24,
+          "nutrient_solution_cycles": 3,
+          "prometheus_water_share_pct": 15,
+          "water_consumption_l_day": 8400
+        }
+      },
+      "dependencies": {
+        "id": "hydroponics",
+        "dependencies": [
+          {
+            "pod_id": "aquifer",
+            "resource": "irrigation_water",
+            "criticality": "high",
+            "notes": "Primary water supply for all grow bays and nutrient solution mixing"
+          },
+          {
+            "pod_id": "zephyr",
+            "resource": "co2_balance",
+            "criticality": "medium",
+            "notes": "CO2/O2 atmospheric exchange for optimal growing conditions"
+          },
+          {
+            "pod_id": "helios",
+            "resource": "electrical_power",
+            "criticality": "high",
+            "notes": "Powers grow lights, climate control, and irrigation pumps"
+          }
+        ]
+      },
+      "supplies": {
+        "id": "hydroponics",
+        "supplies": [
+          {
+            "pod_id": "artemis",
+            "resource": "fresh_produce"
+          },
+          {
+            "pod_id": "prometheus",
+            "resource": "nutrient_compounds"
+          },
+          {
+            "pod_id": "medica",
+            "resource": "dietary_supplements"
+          }
+        ]
+      },
+      "status": {
+        "id": "hydroponics",
+        "status": "nominal",
+        "alerts": [],
+        "last_incident": null
+      }
+    },
+    {
+      "id": "medica",
+      "url": "http://medica:3007",
+      "info": {
+        "name": "Medica Ward",
+        "id": "medica",
+        "role": "Medical services and healthcare",
+        "population": 16,
+        "status": "nominal",
+        "uptime_days": 940,
+        "metadata": {
+          "diagnostic_labs": 3,
+          "oxygen_reserve_hours": 6,
+          "patient_capacity": 40,
+          "pharmacy_stock_days": 12,
+          "staff_physicians": 4,
+          "surgical_suites": 2
+        }
+      },
+      "dependencies": {
+        "id": "medica",
+        "dependencies": [
+          {
+            "pod_id": "prometheus",
+            "resource": "pharmaceuticals",
+            "criticality": "high",
+            "notes": "Primary source for all colony pharmaceutical compounds and medications"
+          },
+          {
+            "pod_id": "aquifer",
+            "resource": "sterilization_water",
+            "criticality": "medium",
+            "notes": "Ultra-filtered water for surgical sterilization and lab processes"
+          },
+          {
+            "pod_id": "zephyr",
+            "resource": "medical_oxygen",
+            "criticality": "high",
+            "notes": "Medical-grade oxygen for patient care and surgical suites"
+          }
+        ]
+      },
+      "supplies": {
+        "id": "medica",
+        "supplies": []
+      },
+      "status": {
+        "id": "medica",
+        "status": "nominal",
+        "alerts": [],
+        "last_incident": null
+      }
+    }
+  ]
+}
