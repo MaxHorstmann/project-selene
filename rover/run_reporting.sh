@@ -9,5 +9,61 @@
 #
 # Analyze the map and produce a Markdown report on your findings.
 
-echo "TODO: implement your reporting agent"
-exit 1
+set -euo pipefail
+
+MAP_FILE="/rover/output/map.json"
+REPORT_FILE="/rover/output/report.md"
+
+if [[ ! -f "$MAP_FILE" ]]; then
+  echo "ERROR: $MAP_FILE not found — run the mapping agent first." >&2
+  exit 1
+fi
+
+if [[ -z "${LLM_API_KEY:-}" ]]; then
+  echo "ERROR: LLM_API_KEY is not set." >&2
+  exit 1
+fi
+
+echo "=== Generating colony report ==="
+
+map_json=$(cat "$MAP_FILE")
+
+prompt="You are a colony systems analyst. You have been given a JSON map of the Selene Lunar Colony network, produced by an automated network crawl. Analyze it thoroughly and write a comprehensive Markdown report covering:
+
+1. **Colony Overview** — name, status, population, scan timestamp
+2. **Pod Inventory** — a table of all pods with their role, population, and status
+3. **Dependency Graph Analysis** — which pods are most depended on, any single points of failure
+4. **Supply Chain** — what each pod supplies and to whom
+5. **Health Assessment** — any pods with alerts, anomalies, or concerning metadata
+6. **Recommendations** — risks or issues worth flagging to the mission commander
+
+Here is the colony map JSON:
+
+$map_json
+
+Write the report in clean Markdown, suitable for a mission commander to read."
+
+echo "Calling Claude..."
+response=$(jq -n \
+  --arg model "claude-3-5-sonnet-20241022" \
+  --arg content "$prompt" \
+  '{
+    model: $model,
+    max_tokens: 4096,
+    messages: [{ role: "user", content: $content }]
+  }' | curl -sf https://api.anthropic.com/v1/messages \
+    -H "Content-Type: application/json" \
+    -H "x-api-key: $LLM_API_KEY" \
+    -H "anthropic-version: 2023-06-01" \
+    -d @-)
+
+report=$(echo "$response" | jq -r '.content[0].text // empty')
+
+if [[ -z "$report" ]]; then
+  echo "ERROR: Empty response from Claude. Raw response:" >&2
+  echo "$response" >&2
+  exit 1
+fi
+
+echo "$report" > "$REPORT_FILE"
+echo "Done. Report written to $REPORT_FILE"
