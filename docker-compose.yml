@@ -4,6 +4,9 @@ volumes:
 networks:
   selene-net:
     driver: bridge
+    ipam:
+      config:
+        - subnet: 172.23.0.0/24
 
 services:
   gateway:
@@ -152,7 +155,7 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - rover-output:/rover/output
+      - ./rover/output:/rover/output
     environment:
       - LLM_API_KEY=${LLM_API_KEY}
       - GATEWAY_URL=http://gateway:3000
