@@ -45,17 +45,25 @@ Write the report in clean Markdown, suitable for a mission commander to read."
 
 echo "Calling Claude..."
 response=$(jq -n \
-  --arg model "claude-3-5-sonnet-20241022" \
+  --arg model "claude-sonnet-4-6" \
   --arg content "$prompt" \
   '{
     model: $model,
     max_tokens: 4096,
     messages: [{ role: "user", content: $content }]
-  }' | curl -sf https://api.anthropic.com/v1/messages \
+  }' | curl -s https://api.anthropic.com/v1/messages \
     -H "Content-Type: application/json" \
     -H "x-api-key: $LLM_API_KEY" \
     -H "anthropic-version: 2023-06-01" \
     -d @-)
+
+# Surface API-level errors (e.g. auth failure, bad request)
+api_error=$(echo "$response" | jq -r '.error.message // empty' 2>/dev/null)
+if [[ -n "$api_error" ]]; then
+  echo "ERROR: Anthropic API error: $api_error" >&2
+  echo "Full response: $response" >&2
+  exit 1
+fi
 
 report=$(echo "$response" | jq -r '.content[0].text // empty')
 
