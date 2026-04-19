@@ -1,6 +1,3 @@
-volumes:
-  rover-output:
-
 networks:
   selene-net:
     driver: bridge
