@@ -9,5 +9,4 @@
 #
 # The JSON structure is up to you — design it for downstream analysis.
 
-echo "TODO: implement your mapping agent"
-exit 1
+/rover/mapper
