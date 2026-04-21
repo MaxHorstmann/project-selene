@@ -127,7 +127,7 @@ var podIDRegex = regexp.MustCompile(`^project-selene-([a-z]+)-\d+`)
 func main() {
 	gatewayURL := os.Getenv("GATEWAY_URL")
 	if gatewayURL == "" {
-		gatewayURL = "http://gateway:3000"
+		fatalf("GATEWAY_URL environment variable is required")
 	}
 	outputDir := "/rover/output"
 	if err := os.MkdirAll(outputDir, 0755); err != nil {
