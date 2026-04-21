@@ -2,7 +2,7 @@ Very fun exercise, I genuinely enjoyed going through it!
 
 # Design decisions and architecture
 
-* Start off by adding a few standard tools (curl, jq, nmap..) to the Rover container, then opened a shell on it (via `docker compose exec rover /bin/bash`) and explored manually for a bit.
+* Started off by adding a few standard tools (curl, jq, nmap..) to the Rover container, then opened a shell on it (via `docker compose exec rover /bin/bash`) and explored manually for a bit.
 
 * Hitting up $GATEWAY_URL...
 
@@ -59,7 +59,7 @@ curl -s http://artemis:3002/dependencies | jq
 
 * Copilot did a decent job drafting this for me, I only had to make a few minor edits e.g. to ensure it's crawling all the pod endpoints. It starts by detecting & nmap'ing the subnet (changed the subnet locally from /16 to /24 to reduce the number of hosts to scan- but again, nmap is battle-tested and should perform well in larger networks as well), then traverses the graph of pods along /dependencies and /supplies until no new pods are found, then maps it out.
 
-* For the reporting part, the script just feeds the previously generated map.json to Sonnet 4.6 with a detailed prompt. Good obviously tons of room for iteration here, but the initial output is already quite impressive.
+* For the reporting part, the script just feeds the previously generated map.json to Sonnet 4.6 with a detailed prompt. Obviously tons of room for iteration here, but the initial output is already quite impressive.
 
 # Code!
 
