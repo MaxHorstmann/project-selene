@@ -50,7 +50,7 @@ response=$(jq -n \
   --arg content "$prompt" \
   '{
     model: $model,
-    max_tokens: 4096,
+    max_tokens: 16000,
     messages: [{ role: "user", content: $content }]
   }' | curl -s https://api.anthropic.com/v1/messages \
     -H "Content-Type: application/json" \
