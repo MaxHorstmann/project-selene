@@ -61,6 +61,11 @@ curl -s http://artemis:3002/dependencies | jq
 
 * For the reporting part, the script just feeds the previously generated map.json to Sonnet 4.6 with a detailed prompt. Good obviously tons of room for iteration here, but the initial output is already quite impressive.
 
+# Code!
+
+[Map!](./rover/src/mapper/main.go) 
+[Report!](rover/run_reporting.sh)
+
 
 # What my agent found
 
@@ -68,7 +73,7 @@ curl -s http://artemis:3002/dependencies | jq
 
 * A number of anomalies and concerns were flagged 
 
-* Full report: [report.md](./rover/output/report.md)
+* Full report: [report.md](./rover/output/report.md) - let's go over it, it's quite impressive
 
 
 # What I'd do with more time
