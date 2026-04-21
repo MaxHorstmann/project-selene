@@ -32,10 +32,11 @@ prompt="You are a colony systems analyst. You have been given a JSON map of the 
 
 1. **Colony Overview** — name, status, population, scan timestamp
 2. **Pod Inventory** — a table of all pods with their role, population, and status
-3. **Dependency Graph Analysis** — which pods are most depended on, any single points of failure
-4. **Supply Chain** — what each pod supplies and to whom
-5. **Health Assessment** — any pods with alerts, anomalies, or concerning metadata
-6. **Recommendations** — risks or issues worth flagging to the mission commander
+3. **Dependency Map** - a visualization (ascii art is fine) of the dependencies between pods
+4. **Dependency Graph Analysis** — which pods are most depended on, any single points of failure
+5. **Supply Chain** — what each pod supplies and to whom
+6. **Health Assessment** — any pods with alerts, anomalies, or concerning metadata
+7. **Recommendations** — risks or issues worth flagging to the mission commander
 
 Here is the colony map JSON:
 
