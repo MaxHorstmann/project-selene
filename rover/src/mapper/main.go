@@ -5,13 +5,12 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"math/bits"
+	"net"
 	"net/http"
 	"os"
 	"path/filepath"
 	"regexp"
 	"strconv"
-	"strings"
 	"time"
 
 	nmap "github.com/Ullaakut/nmap/v3"
@@ -250,68 +249,27 @@ func main() {
 
 // ─── Network helpers ─────────────────────────────────────────────────────────
 
-// detectSubnet reads /proc/net/route to find the directly-connected subnet
-// (the non-default route with no gateway).
+// detectSubnet returns the CIDR of the first non-loopback IPv4 interface.
 func detectSubnet() (string, error) {
-	data, err := os.ReadFile("/proc/net/route")
+	ifaces, err := net.Interfaces()
 	if err != nil {
 		return "", err
 	}
-	// Columns: Iface Destination Gateway Flags RefCnt Use Metric Mask ...
-	for _, line := range strings.Split(string(data), "\n")[1:] {
-		fields := strings.Fields(line)
-		if len(fields) < 8 {
+	for _, iface := range ifaces {
+		if iface.Flags&net.FlagLoopback != 0 || iface.Flags&net.FlagUp == 0 {
 			continue
 		}
-		dest := fields[1]
-		gw := fields[2]
-		mask := fields[7]
-		// Skip default route and routed (non-directly-connected) entries
-		if dest == "00000000" || gw != "00000000" {
-			continue
-		}
-		ip, err := hexLEToIP(dest)
+		addrs, err := iface.Addrs()
 		if err != nil {
 			continue
 		}
-		prefix, err := hexLEToPrefix(mask)
-		if err != nil {
-			continue
+		for _, addr := range addrs {
+			if ipNet, ok := addr.(*net.IPNet); ok && ipNet.IP.To4() != nil {
+				return ipNet.String(), nil
+			}
 		}
-		return fmt.Sprintf("%s/%d", ip, prefix), nil
 	}
-	return "", fmt.Errorf("could not detect subnet from /proc/net/route")
-}
-
-// hexLEToIP converts an 8-char little-endian hex string (from /proc/net/route)
-// to a dotted-decimal IP string.
-func hexLEToIP(h string) (string, error) {
-	if len(h) != 8 {
-		return "", fmt.Errorf("bad hex ip: %s", h)
-	}
-	// Bytes are stored in little-endian order, so reverse them.
-	var b [4]byte
-	for i := 0; i < 4; i++ {
-		var v uint8
-		if _, err := fmt.Sscanf(h[(3-i)*2:(3-i)*2+2], "%02X", &v); err != nil {
-			return "", err
-		}
-		b[i] = v
-	}
-	return fmt.Sprintf("%d.%d.%d.%d", b[0], b[1], b[2], b[3]), nil
-}
-
-// hexLEToPrefix converts an 8-char little-endian hex mask to a CIDR prefix length.
-// Bit-counting is order-independent so we parse as a plain uint32.
-func hexLEToPrefix(h string) (int, error) {
-	if len(h) != 8 {
-		return 0, fmt.Errorf("bad hex mask: %s", h)
-	}
-	var mask uint32
-	if _, err := fmt.Sscanf(h, "%08X", &mask); err != nil {
-		return 0, err
-	}
-	return bits.OnesCount32(mask), nil
+	return "", fmt.Errorf("could not detect subnet from network interfaces")
 }
 
 // ─── nmap helpers ─────────────────────────────────────────────────────────────
