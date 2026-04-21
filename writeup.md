@@ -66,8 +66,6 @@ curl -s http://artemis:3002/dependencies | jq
 
 * helios and aquifer are *critical* single points of failure. 
 
-* Supposedly, there are 17 unaccounted residents - wait, what? That needs some human review.
-
 * A number of anomalies and concerns were flagged 
 
 * Full report: [report.md](./rover/output/report.md)
@@ -75,8 +73,8 @@ curl -s http://artemis:3002/dependencies | jq
 
 # What I'd do with more time
 
-* Iterate more on the reporting part, mostly by tweaking the prompt
-
 * Run this on different (larger) colonies
 
-* Visualize the dependency graph.
+* Properly visualize the dependency graph.
+
+* Iterate a lot more on the reporting part, mostly by tweaking the prompt
