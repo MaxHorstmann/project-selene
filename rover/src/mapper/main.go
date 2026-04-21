@@ -148,8 +148,8 @@ func main() {
 
 	// Phase 2: print discovered service map
 	fmt.Println("=== Phase 2: Building service map ===")
-	for id, port := range podPort {
-		fmt.Printf("  %s -> :%s\n", id, port)
+	if b, err := json.MarshalIndent(podPort, "", "  "); err == nil {
+		fmt.Println(string(b))
 	}
 
 	// Phase 3: gateway handshake
